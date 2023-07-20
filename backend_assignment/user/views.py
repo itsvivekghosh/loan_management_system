@@ -5,7 +5,7 @@ from rest_framework import status
 
 from .task import calculateCreditScore
 from .models import *
-from .serlializers import UserSerializer
+from .serializers import UserSerializer
 
 
 class RegisterUser(APIView):
@@ -26,22 +26,22 @@ class RegisterUser(APIView):
         if serializer.is_valid():
             
             User.objects.create(
-                user_aadhar_number = user_data["user_aadhar_number"],
-                user_name=user_data["user_name"],
-                user_email=user_data["user_email"],
-                user_annual_income=user_data["user_annual_income"]
+                aadhar_number = user_data["aadhar_number"],
+                name=user_data["name"],
+                email=user_data["email"],
+                annual_income=user_data["annual_income"]
             )
-            calculateCreditScore.delay(user_data["user_aadhar_number"])
+            calculateCreditScore.delay(user_data["aadhar_number"])
 
             created_user = User.objects.get(
-                user_aadhar_number=user_data["user_aadhar_number"]
+                aadhar_number=user_data["aadhar_number"]
             )
             
             response_data = {
                 "status": "success",
                 "message": {
-                    "user_uuid": created_user.user_id,
-                    "user_aadhar_number": created_user.user_aadhar_number
+                    "uuid": created_user.user_id,
+                    "aadhar_number": created_user.aadhar_number
                 }
             }
 

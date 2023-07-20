@@ -25,5 +25,6 @@ urlpatterns = [
     
     # User URLS
     path('api/', include('user.urls'), name="User APIs"),
+    path('api/', include('loan.urls'), name="Loan APIs"),
     
 ]
