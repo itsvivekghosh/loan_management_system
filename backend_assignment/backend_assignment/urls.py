@@ -25,6 +25,11 @@ urlpatterns = [
     
     # User URLS
     path('api/', include('user.urls'), name="User APIs"),
+
+    # Loan APIs
     path('api/', include('loan.urls'), name="Loan APIs"),
+
+    # Payment APIs
+    path('api/', include('payments.urls'), name="Payment APIs"),
     
 ]

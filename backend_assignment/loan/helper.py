@@ -108,20 +108,20 @@ def calculate_emi(data):
 
 
 
-def calculate_due_dates_with_amount(amount, loan_date, term_period, loan_amount):
+def calculate_due_dates_with_amount(amount, loan_date, term_period):
     # print(amount, loan_date, (term_period))
 
     listData = []
-    for _ in range(term_period):
+    for index in range(term_period):
         
         dateTimeObj = datetime.strptime(loan_date, "%Y-%m-%d") # to datetime
         next_date = nextDate(dateTimeObj).strftime("%Y-%m-%d")
         
-        loan_amount -= amount
         emi_date_object = {
+            "emi_month_number": index+1,
             "due_date": next_date,
             "due_amount": amount,
-            "outstanding_amount": loan_amount
+            "emi_paid": False
         }
         listData.append(emi_date_object)
         loan_date = next_date

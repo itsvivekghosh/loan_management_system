@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
 EXTERNAL_APPS = [
     'user.apps.UserConfig',
-    'loan.apps.LoanConfig'
+    'loan.apps.LoanConfig',
+    'payments.apps.PaymentsConfig'
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
@@ -130,7 +131,7 @@ TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

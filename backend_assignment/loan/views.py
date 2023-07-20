@@ -37,8 +37,9 @@ class ApplyLoan(APIView):
                 if loan_check_status == True:
 
                     payment_due_dates_list = calculate_due_dates_with_amount(
-                        loan_check_message, request.data['disbursement_date'], 
-                        request.data['term_period'], loan_check_message * request.data["term_period"]
+                        loan_check_message, 
+                        request.data['disbursement_date'], 
+                        request.data['term_period']
                     )
                     total_loan_amount_with_interest = loan_check_message * request.data["term_period"]
 
@@ -50,7 +51,8 @@ class ApplyLoan(APIView):
                         term_period = request.data["term_period"],
                         disbursement_date = request.data["disbursement_date"],
                         emi_amount = loan_check_message,
-                        total_loan_amount_with_interest = total_loan_amount_with_interest
+                        total_loan_amount_with_interest = total_loan_amount_with_interest,
+                        emi_due_dates_with_payment_history = payment_due_dates_list
                     )
 
                     response_data = {
