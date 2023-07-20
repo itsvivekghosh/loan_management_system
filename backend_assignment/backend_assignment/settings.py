@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 EXTERNAL_APPS = [
     'user.apps.UserConfig',
+    'loan.apps.LoanConfig'
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS

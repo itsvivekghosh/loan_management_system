@@ -53,9 +53,9 @@ def calculateCreditScore(aadhar_number):
     
     # time.sleep(10)
     User.objects.filter(
-        user_aadhar_number=aadhar_number
+        aadhar_number = aadhar_number
     ).update(
-        user_credit_score=credit_score
+        credit_score = credit_score
     )
 
     return str('Total Balance for {} : {} & Credit Score is: {}'.format(aadhar_number, total_balance, credit_score))
@@ -63,10 +63,10 @@ def calculateCreditScore(aadhar_number):
 
 '''
 {
-    "user_aadhar_number": "1051ed87-1007-4d3b-8d11-b02ab008e2ea",
-    "user_name": "Vivek Ghosh",
-    "user_email": "vivek@email.com",
-    "user_annual_income": 500000
+    "aadhar_number": "1051ed87-1007-4d3b-8d11-b02ab008e2ea",
+    "name": "Vivek Ghosh",
+    "email": "vivek@email.com",
+    "annual_income": 500000
 }
 
 '''
