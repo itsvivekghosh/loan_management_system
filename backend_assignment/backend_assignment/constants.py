@@ -31,3 +31,10 @@ CAR = 'Car'
 HOME = 'Home'
 PERSONAL = 'Personal'
 EDUCATION = 'Education'
+
+LOAN_CHOICES = (
+    (CAR, "CAR"),
+    (HOME, "HOME"),
+    (EDUCATION, "EDUCATION"),
+    (PERSONAL, "PERSONAL"),
+)

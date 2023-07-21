@@ -1,19 +1,15 @@
 from django.db import models
 from user.models import User
+import backend_assignment.constants as constant
 import uuid
 
-LOAN_CHOICES = (
-    ("Car", "CAR"),
-    ("Home", "HOME"),
-    ("Education", "EDUCATION"),
-    ("Personal", "PERSONAL"),
-)
+
 
 class Loan(models.Model):
 
     loan_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    loan_type = models.CharField(choices=LOAN_CHOICES, default="Personal", max_length=9)
+    loan_type = models.CharField(choices=constant.LOAN_CHOICES, default="Personal", max_length=9)
     loan_amount = models.BigIntegerField()
     total_loan_amount_with_interest = models.BigIntegerField(blank=True)
     interest_rate = models.FloatField()
