@@ -1,0 +1,649 @@
+{
+	"info": {
+		"_postman_id": "d33be885-72d6-4603-b381-c15d8427a433",
+		"name": "Bright Money Backend Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8807811"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"aadhar_number\": \"1051ed87-1007-4d3b-8d11-b02ab008e2ea\",\r\n    \"name\": \"Vivek Ghosh\",\r\n    \"email\": \"vivek@email.com\",\r\n    \"annual_income\": 5000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/register-user/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register-user",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create User - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"aadhar_number\": \"1051ed87-1007-4d3b-8d11-b02ab008e2ea\",\r\n    \"name\": \"Vivek Ghosh\",\r\n    \"email\": \"vivek@email.com\",\r\n    \"annual_income\": 5000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/register-user/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"register-user",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 20 Jul 2023 21:24:01 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "133"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": {\n        \"uuid\": \"0bc323ad-777f-42b2-8d59-26a14ac0c7eb\",\n        \"aadhar_number\": \"1051ed87-1007-4d3b-8d11-b02ab008e2ea\"\n    }\n}"
+				},
+				{
+					"name": "Create User - Error if the user already exists",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"aadhar_number\": \"1051ed87-1007-4d3b-8d11-b02ab008e2ea\",\r\n    \"name\": \"Vivek Ghosh\",\r\n    \"email\": \"vivek@email.com\",\r\n    \"annual_income\": 5000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/register-user/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"register-user",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 21 Jul 2023 12:02:06 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "140"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": {\n        \"aadhar_number\": \"user with this aadhar number already exists.\",\n        \"email\": \"user with this email already exists.\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetch Transaction",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "loan-id",
+						"value": "ca6542d6-b911-4e20-a5d0-3ba395ccf639",
+						"description": "Loan ID",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8000/api/get-statement/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"get-statement",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Fetch Transaction - Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "loan-id",
+								"value": "3d0ff59c-91eb-439f-825d-8e4cd4b6cf21",
+								"description": "Loan ID",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/get-statement/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"get-statement",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 21 Jul 2023 12:00:33 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1953"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": {\n        \"past_transactions\": [\n            {\n                \"transaction_datetime\": \"2023-07-21T11:58:42.553234\",\n                \"principal_amount\": 155158,\n                \"interest_paid\": 87500,\n                \"amount_paid\": 242658\n            }\n        ],\n        \"upcoming_transactions\": [\n            {\n                \"emi_due_date\": \"2023-09-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2023-10-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2023-11-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2023-12-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-01-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-02-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-03-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-04-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-05-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-06-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-07-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-08-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-09-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-10-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-11-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2024-12-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-01-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-02-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-03-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-04-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-05-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-06-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-07-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-08-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-09-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-10-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-11-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2025-12-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-01-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-02-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-03-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-04-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-05-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-06-01\",\n                \"amount_due\": 242658\n            },\n            {\n                \"emi_due_date\": \"2026-07-01\",\n                \"amount_due\": 242658\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Fetch Transaction - Failure Invalid Loan ID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "loan-id",
+								"value": "ca6542d6-b911-4e20-a5d0-3ba395ccf639",
+								"description": "Loan ID",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/get-statement/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"get-statement",
+								""
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 21 Jul 2023 12:08:47 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "114"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Error while fetching loan details for Loan ID: ca6542d6-b911-4e20-a5d0-3ba395ccf639\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Loan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"f2eabb0d87cd4bb79bc879010437ad8e\",\r\n    \"loan_type\": \"Car\",\r\n    \"loan_amount\": 700000,\r\n    \"interest_rate\": 18,\r\n    \"term_period\": 6,\r\n    \"disbursement_date\": \"2023-07-26\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/apply-loan/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"apply-loan",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create-Loan - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"0bc323ad-777f-42b2-8d59-26a14ac0c7eb\",\r\n    \"loan_type\": \"Car\",\r\n    \"loan_amount\": 700000,\r\n    \"interest_rate\": 15,\r\n    \"term_period\": 12,\r\n    \"disbursement_date\": \"2023-06-28\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/apply-loan/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"apply-loan",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 20 Jul 2023 21:25:33 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1135"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": {\n        \"loan_id\": \"e75f34f8-6cc3-467e-9b86-65e3aaf5b877\",\n        \"total_loan_amount_with_interest\": 758172,\n        \"due_dates\": [\n            {\n                \"emi_month_number\": 1,\n                \"due_date\": \"2023-07-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 2,\n                \"due_date\": \"2023-08-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 3,\n                \"due_date\": \"2023-09-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 4,\n                \"due_date\": \"2023-10-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 5,\n                \"due_date\": \"2023-11-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 6,\n                \"due_date\": \"2023-12-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 7,\n                \"due_date\": \"2024-01-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 8,\n                \"due_date\": \"2024-02-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 9,\n                \"due_date\": \"2024-03-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 10,\n                \"due_date\": \"2024-04-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 11,\n                \"due_date\": \"2024-05-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            },\n            {\n                \"emi_month_number\": 12,\n                \"due_date\": \"2024-06-28\",\n                \"due_amount\": 63181,\n                \"emi_paid\": false\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Make Payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loan_id\": \"ca6542d6-b911-4e20-a5d0-3ba395ccf636\",\r\n    \"amount\": 122868\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/api/make-payment/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"make-payment",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Make-Payment - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loan_id\": \"e75f34f8-6cc3-467e-9b86-65e3aaf5b877\",\r\n    \"amount\": 23000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/make-payment/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"make-payment",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 20 Jul 2023 21:27:21 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "81"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": {\n        \"loan_id\": \"e75f34f8-6cc3-467e-9b86-65e3aaf5b877\"\n    }\n}"
+				},
+				{
+					"name": "EMI Already Paid for the Month",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loan_id\": \"6ab0ca8d76444000bf2e2783a823903e\",\r\n    \"amount\": 24000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/make-payment/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"make-payment",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 21 Jul 2023 06:55:21 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.10.11"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"EMI is already paid for month!\"\n}"
+				}
+			]
+		}
+	]
+}
