@@ -4,36 +4,40 @@ import math
 from datetime import datetime, timedelta
 from calendar import monthrange
 
+import backend_assignment.constants as constant 
+
+
+
 class LOANTYPE(Enum):
-    CAR = "Car"
-    PERSONAL = "Personal"
-    EDUCATION = "Education"
-    HOME = "Home"
+    CAR = constant.CAR
+    PERSONAL = constant.PERSONAL
+    EDUCATION = constant.EDUCATION
+    HOME = constant.HOME
 
 
 def validate_loan_requirements(user: User, data):
 
-    if user.credit_score < 450:
+    if user.credit_score < constant.MIN_CREDIT_SCORE:
         return get_response_data(False, "Your credit score is less then 450")
     
-    if user.annual_income < 150000:
-        return get_response_data(False, "Your Annual Income is then {}".format(150000))
+    if user.annual_income < constant.MIN_ANNUAL_INCOME:
+        return get_response_data(False, "Your Annual Income is then {}".format(constant.MIN_ANNUAL_INCOME))
     
     amount, loan_type = data["loan_amount"], data["loan_type"]
-    if loan_type == LOANTYPE.CAR.value and amount > 750000:
-        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.CAR.value, 750000))
+    if loan_type == LOANTYPE.CAR.value and amount > constant.CAR_LOAN_MIN_AMOUNT:
+        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.CAR.value, constant.CAR_LOAN_MIN_AMOUNT))
     
-    if loan_type == LOANTYPE.HOME.value and amount > 8500000:
-        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.HOME.value, 8500000))
+    if loan_type == LOANTYPE.HOME.value and amount > constant.HOME_LOAN_MIN_AMOUNT:
+        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.HOME.value, constant.HOME_LOAN_MIN_AMOUNT))
     
-    if loan_type == LOANTYPE.EDUCATION.value and amount > 5000000:
-        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.EDUCATION.value, 5000000))
+    if loan_type == LOANTYPE.EDUCATION.value and amount > constant.EDUCATION_LOAN_MIN_AMOUNT:
+        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.EDUCATION.value, constant.EDUCATION_LOAN_MIN_AMOUNT))
     
-    if loan_type == LOANTYPE.PERSONAL.value and amount > 1000000:
-        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.PERSONAL.value, 1000000))
+    if loan_type == LOANTYPE.PERSONAL.value and amount > constant.PERSONAL_LOAN_MIN_AMOUNT:
+        return get_response_data(False, "Loan amount for {} LOAN should be less then {}".format(LOANTYPE.PERSONAL.value, constant.PERSONAL_LOAN_MIN_AMOUNT))
     
-    if data["interest_rate"] < 14:
-        return get_response_data(False, "Interest Rate should not be less then {}".format(14))
+    if data["interest_rate"] < constant.MIN_INTEREST_RATE:
+        return get_response_data(False, "Interest Rate should not be less then {}".format(constant.MIN_INTEREST_RATE))
     
     emi_validation_obj = validate_emi_requirements(data, user)
     emi_status, emi_message = emi_validation_obj['status'], emi_validation_obj['message']
@@ -58,8 +62,8 @@ def validate_emi_requirements(data, user):
     
     interest_earned = (emi_amount * data["term_period"] - data["loan_amount"])
     # # Total interest earned should be > 10000
-    if interest_earned < 10000:
-        return get_response_data(False, """EMI amount should be more then 10000!""")
+    if interest_earned < constant.MIN_INTEREST_EARNING:
+        return get_response_data(False, """EMI amount should be more then {}!""".format(constant.MIN_INTEREST_EARNING))
 
     
     return get_response_data(True, emi_amount)

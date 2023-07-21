@@ -1,4 +1,33 @@
 
 
+## Response Status Values("success", "error")
 SUCCESS = 'success'
 ERROR = 'error'
+
+## Response keys
+STATUS = 'status'
+MESSAGE = 'message'
+
+
+## User Values
+MIN_CREDIT_SCORE = 450
+MAX_CREDIT_SCORE = 900
+
+MIN_ANNUAL_INCOME = 150000
+
+## LOAN Values
+CAR_LOAN_MIN_AMOUNT = 750000
+HOME_LOAN_MIN_AMOUNT = 8500000
+EDUCATION_LOAN_MIN_AMOUNT = 5000000
+PERSONAL_LOAN_MIN_AMOUNT = 1000000
+
+## INTEREST Values
+MIN_INTEREST_RATE = 14
+MIN_INTEREST_EARNING = 10000
+
+
+## LOAN Types
+CAR = 'Car'
+HOME = 'Home'
+PERSONAL = 'Personal'
+EDUCATION = 'Education'
