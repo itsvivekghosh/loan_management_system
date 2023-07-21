@@ -22,6 +22,7 @@ class Loan(models.Model):
     emi_amount = models.FloatField(blank=True)
     total_loan_amount_paid = models.FloatField(blank=True, default=0.0)
     emi_due_dates_with_payment_history = models.JSONField()
+    interest_amount = models.BigIntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
         return '{} -> {}'.format(str(self.loan_id), str(self.user.user_id))

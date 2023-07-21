@@ -51,6 +51,7 @@ class ApplyLoan(APIView):
                         loan_type = request.data["loan_type"],
                         loan_amount = request.data["loan_amount"],
                         interest_rate = request.data["interest_rate"],
+                        interest_amount = total_loan_amount_with_interest - request.data['loan_amount'],
                         term_period = request.data["term_period"],
                         disbursement_date = request.data["disbursement_date"],
                         emi_amount = loan_check_message,
