@@ -110,19 +110,25 @@ class PaymentsView(APIView):
 class FetchTransactionView(APIView):
 
     def get(self, request, format=None):
-
-        loan_id = request.headers['loan-id']
         try:
+            loan_id = request.headers['loan-id']
+            try:
+                
+                payment_list = self.get_transactions_statement(loan_id=loan_id)
+                return payment_list
             
-            payment_list = self.get_transactions_statement(loan_id=loan_id)
-            return payment_list
-        
+            except Exception as e:
+                message = ("Error while fetching details for Loan ID: {}. Please check the Loan ID again.".format(loan_id))
+                return Response({
+                    'status': 'error',
+                    "message": message
+                }, status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            message = ("Error while fetching details for Loan ID: {}. Please check the Loan ID again.".format(loan_id))
+            message = "Invalid API Request, cause: {}".format(e)
             return Response({
                 'status': 'error',
                 "message": message
-            }, status.HTTP_404_NOT_FOUND)
+            }, status.HTTP_400_BAD_REQUEST)
         
 
     def get_transactions_statement(self, loan_id):
