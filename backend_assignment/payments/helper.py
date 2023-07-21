@@ -104,8 +104,8 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
             data['due_amount'] = emi_amount
 
     if is_any_payment_done:
-        # loan.save()
-        print('saving...')
+        loan.save()
+        # print('saving...')
 
     else:
         return {
