@@ -15,3 +15,6 @@ class User(models.Model):
     
     def __getitem__(self):
         return User
+    
+    class Meta:
+        db_table = 'users'

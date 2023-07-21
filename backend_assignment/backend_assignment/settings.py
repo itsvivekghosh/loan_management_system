@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,9 +99,9 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'assignment',
-        'USER': 'vivekghosh',
-        'PASSWORD': 'Vivek@1999',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USERNAME'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST':'localhost',
         'PORT':'3306',
     }
@@ -164,4 +168,3 @@ CELERY_RESULT_SERIALIZER = "json"
 
 CELERY_TASK_SELERLIZER = "json"
 
-STATIC_URL = "static/"

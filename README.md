@@ -18,6 +18,8 @@ $ venv/bin/activate
 ```sh
 $ pip3 install -r requirements.txt
 ```
+
+Rename `.env-dev` file to `.env` and fill your database credentials.
   
 ## Install Redis 
 
