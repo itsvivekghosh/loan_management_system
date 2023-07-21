@@ -1,5 +1,9 @@
 # Backend Assignment
 
+### Created a Loan Management System as per requirements.
+
+***Note: I have used Windows-10 x64 system (I do not have Linux machine), some steps may vary, so, I attached the setup documentations that I followed during dev.***
+
 ## Creating the virtual environment
 
 Clone this project and create a Virtual Environment & activate the venv in the project location.
@@ -7,7 +11,7 @@ Clone this project and create a Virtual Environment & activate the venv in the p
 $ virtualenv venv
 ```
 ```sh
-$ source venv/bin/activate
+$ venv/bin/activate
 ```  
 
 ## Install all required dependencies from requirements.txt file
@@ -74,7 +78,18 @@ To Install MySQL Database, I have followed this documentation:
 $ https://www.dataquest.io/blog/install-mysql-windows/
 ```
 
-## Setup Models  
+Create Database in your MySQL shell by:
+```sh
+mysql -u user-name -p
+```
+
+Run a CREATE DATABASE command to create a new database. 
+```sh
+CREATE DATABASE assignment. 
+```
+
+
+## Creating and Setting up Models  
 
 ```sh
 $ python3 manage.py makemigrations
@@ -82,6 +97,7 @@ $ python3 manage.py makemigrations
 ```sh
 $ python3 manage.py migrate 
 ```
+Run the Django Server
 ```sh
 $ python3 manage.py runserver
 ```
