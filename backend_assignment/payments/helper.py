@@ -28,7 +28,7 @@ def update_emi_list_for_payment(data, loan: Loan):
         if current_date <= datetime.strptime(data['due_date'], "%Y-%m-%d").date():
 
             if data['emi_paid'] == False:
-                print('changing emi_paid value for ', data['due_date'], data['emi_month_number'])
+                # print('changing emi_paid value for ', data['due_date'], data['emi_month_number'])
                 data["emi_paid"] = True
                 is_any_payment_done = True
                 updated_month_index = data['emi_month_number']
@@ -42,8 +42,8 @@ def update_emi_list_for_payment(data, loan: Loan):
             break
 
     if is_any_payment_done:
-        # loan.save()
-        print('saving...')
+        loan.save()
+        # print('saving...')
 
     else:
         return {
@@ -77,7 +77,7 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
     else:
         emi_amount = loan.emi_amount
 
-    print(loan.emi_amount, emi_amount, diff_emi_new_amount)
+    # print(loan.emi_amount, emi_amount, diff_emi_new_amount)
 
 
     for data in loan.emi_due_dates_with_payment_history:
@@ -104,7 +104,7 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
             data['due_amount'] = emi_amount
 
     if is_any_payment_done:
-        loan.save()
+        # loan.save()
         print('saving...')
 
     else:
@@ -118,3 +118,12 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
         "message": "EMI Paid successfully for this month!",
         "updated_month_index": updated_month_index
     } 
+
+
+def get_principal_amount_and_interest_amount(data_list, month_index):
+
+    for data in data_list:
+        if data['emi_month_number'] == month_index:
+            return (data['principal_amount'], data['interest_on_emi'])
+
+    return (None, None)

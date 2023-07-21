@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from .serializers import *
 from .models import Loan
-from .helper import validate_loan_requirements, calculate_due_dates_with_amount
+from .helper import validate_loan_requirements, calculate_due_dates_with_amount, get_loan_payment_due_dates_list
 from user.models import User
 
 
@@ -39,9 +39,12 @@ class ApplyLoan(APIView):
                     payment_due_dates_list = calculate_due_dates_with_amount(
                         loan_check_message, 
                         request.data['disbursement_date'], 
-                        request.data['term_period']
+                        request.data['term_period'],
+                        request.data['loan_amount'],
+                        request.data['interest_rate']
                     )
                     total_loan_amount_with_interest = loan_check_message * request.data["term_period"]
+                    payment_due_dates_list_response = get_loan_payment_due_dates_list(payment_due_dates_list)
 
                     created_loan_object = Loan.objects.create(
                         user = user,
@@ -60,7 +63,7 @@ class ApplyLoan(APIView):
                         "message": {
                             'loan_id': created_loan_object.loan_id,
                             'total_loan_amount_with_interest': total_loan_amount_with_interest,
-                            'due_dates': payment_due_dates_list,
+                            'due_dates': payment_due_dates_list_response,
                         }
                     }
 

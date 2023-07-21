@@ -10,3 +10,14 @@ class PaymentSerializer(serializers.ModelSerializer):
             "loan_id",
             "payment_timestamp",
 		)
+
+
+class GetTransactionSerializer(serializers.ModelSerializer):
+	
+	class Meta:
+		model = Payments
+		fields = (
+			'payment_id',
+			'loan_id',
+			"payment_timestamp",
+		)
