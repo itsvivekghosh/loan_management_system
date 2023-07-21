@@ -115,7 +115,7 @@ def calculate_due_dates_with_amount(amount, loan_date, term_period, loan_amount,
     for index in range(term_period):
         
         dateTimeObj = datetime.strptime(loan_date, "%Y-%m-%d") # to datetime
-        next_date = nextDate(dateTimeObj).strftime("%Y-%m-%d")
+        next_date = nextDateUtil(dateTimeObj).strftime("%Y-%m-%d")
         interest_on_emi = loan_amount_*(interest_rate/100) / 12
         principal_amount = amount - interest_on_emi
         loan_amount_ -= principal_amount
@@ -147,6 +147,16 @@ def nextDate(today_date):
     days_in_month = monthrange(year, month)[1]
     next_month = today_date + timedelta(days=days_in_month)
     return next_month
+
+
+def nextDateUtil(current_date:datetime):
+
+    current_date = current_date.replace(day=1)
+    current_date = current_date + timedelta(days=32)
+    next_date = current_date.replace(day=1)
+
+    return next_date
+
 
 
 def get_loan_payment_due_dates_list(payment_list):
