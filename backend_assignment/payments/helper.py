@@ -65,6 +65,7 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
     updated_month_index = -1
     current_date = datetime.now().date()
     emi_amount, diff_emi_new_amount = -1, 0
+    loan_paid_month = None
 
     if loan.emi_amount != request_data['amount']:
         data = {
@@ -91,6 +92,7 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
                 loan.total_loan_amount_paid += request_data['amount']
                 is_any_payment_done = True
                 updated_month_index = data['emi_month_number']
+                loan_paid_month = data['due_date']
 
             else:
                 return {
@@ -116,7 +118,8 @@ def update_emi_list_for_payment_util(request_data, loan: Loan):
     return {
         "status": True, 
         "message": "EMI Paid successfully for this month!",
-        "updated_month_index": updated_month_index
+        "updated_month_index": updated_month_index,
+        'loan_paid_month': loan_paid_month,
     } 
 
 

@@ -9,7 +9,7 @@ from .models import User
 @shared_task
 def calculateCreditScore(aadhar_number):
 
-    with open("backend_assignment/static/sample.csv") as csv_file:
+    with open("backend_assignment/static/data.csv") as csv_file:
 
         reader = csv.reader(csv_file)
         total_balance = 0

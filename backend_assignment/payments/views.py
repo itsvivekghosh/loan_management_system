@@ -64,19 +64,24 @@ class PaymentsView(APIView):
                 if updated_emi_list_response['status'] == True:
 
                     principal_amount, interest_amount_paid = get_principal_amount_and_interest_amount(loan.emi_due_dates_with_payment_history, updated_emi_list_response['updated_month_index'])
-
-                    Payments.objects.create(
+                    
+                    payment = Payments.objects.create(
                         amount = request.data['amount'],
                         loan = loan,
                         loan_paid_for_month_number = updated_emi_list_response['updated_month_index'],
                         interest_paid = interest_amount_paid,
-                        principal_amount = principal_amount
+                        principal_amount = principal_amount,
+                        loan_paid_month = updated_emi_list_response['loan_paid_month']
                     )
 
                     return Response({
                             'status': "success", 
                             'message': {
                                 'loan_id': request.data["loan_id"],
+                                'payment_transaction_id': payment.payment_id,
+                                'amount_paid': payment.amount,
+                                'payment_timestamp': payment.payment_timestamp,
+                                'loan_paid_month': payment.loan_paid_month
                             }
                         },
                         status.HTTP_200_OK
