@@ -51,7 +51,7 @@ def validate_emi_requirements(data, user):
 
     # EMI amount must be at-most 60% of the monthly income of the User
     user_monthly_income_per_emi = (((user.annual_income / 12) * 60) / 100)
-    print(user_monthly_income_per_emi, emi_amount)
+    # print(user_monthly_income_per_emi, emi_amount)
 
     if emi_amount > user_monthly_income_per_emi:
         return get_response_data(False, """EMI amount should be less then 60 percent of the monthly income of the User!""")
@@ -108,20 +108,29 @@ def calculate_emi(data):
 
 
 
-def calculate_due_dates_with_amount(amount, loan_date, term_period, loan_amount):
-    # print(amount, loan_date, (term_period))
+def calculate_due_dates_with_amount(amount, loan_date, term_period, loan_amount, interest_rate):
 
     listData = []
-    for _ in range(term_period):
+    loan_amount_ = loan_amount
+    for index in range(term_period):
         
         dateTimeObj = datetime.strptime(loan_date, "%Y-%m-%d") # to datetime
-        next_date = nextDate(dateTimeObj).strftime("%Y-%m-%d")
+        next_date = nextDateUtil(dateTimeObj).strftime("%Y-%m-%d")
+        interest_on_emi = loan_amount_*(interest_rate/100) / 12
+        principal_amount = amount - interest_on_emi
+        loan_amount_ -= principal_amount
+
+        if (loan_amount_ < 0):
+            loan_amount_ = 0
         
-        loan_amount -= amount
         emi_date_object = {
+            "emi_month_number": index+1,
             "due_date": next_date,
             "due_amount": amount,
-            "outstanding_amount": loan_amount
+            "emi_paid": False,
+            "interest_on_emi": math.floor(interest_on_emi),
+            'principal_amount': math.floor(principal_amount),
+            'outstanding_balance': math.floor(loan_amount_)
         }
         listData.append(emi_date_object)
         loan_date = next_date
@@ -138,3 +147,25 @@ def nextDate(today_date):
     days_in_month = monthrange(year, month)[1]
     next_month = today_date + timedelta(days=days_in_month)
     return next_month
+
+
+def nextDateUtil(current_date:datetime):
+
+    current_date = current_date.replace(day=1)
+    current_date = current_date + timedelta(days=32)
+    next_date = current_date.replace(day=1)
+
+    return next_date
+
+
+
+def get_loan_payment_due_dates_list(payment_list):
+
+    response = []
+    for data in payment_list:
+        res = {
+            "due_date": data['due_date'],
+            'emi_due_amount': data['due_amount']
+        }
+        response.append(res)
+    return response
