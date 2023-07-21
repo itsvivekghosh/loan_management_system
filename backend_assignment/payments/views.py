@@ -182,6 +182,7 @@ class FetchTransactionView(APIView):
                     'principal_amount': data['principal_amount'],
                     'interest_paid': data['interest_paid'],
                     'amount_paid': data['amount'],
+                    'month_paid': data['loan_paid_month']
                 }
                 past_transactions.append(past_transaction_object)
 
