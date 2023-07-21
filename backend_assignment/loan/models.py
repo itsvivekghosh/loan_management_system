@@ -22,3 +22,6 @@ class Loan(models.Model):
 
     def __str__(self) -> str:
         return '{} -> {}'.format(str(self.loan_id), str(self.user.user_id))
+    
+    class Meta:
+        db_table = 'loans'

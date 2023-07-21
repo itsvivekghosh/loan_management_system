@@ -14,3 +14,6 @@ class Payments(models.Model):
     principal_amount = models.BigIntegerField(blank=True, null=True)
     payment_timestamp = models.DateTimeField(default=datetime.utcnow())
     interest_paid = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'payments'
