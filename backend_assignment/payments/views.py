@@ -98,12 +98,12 @@ class PaymentsView(APIView):
     def create_payment_response_(self, request, loan, updated_emi_list_response) -> Response:
 
         try:
-            print(updated_emi_list_response)
+
             principal_amount, interest_amount_paid = get_principal_amount_and_interest_amount(
                 loan.emi_due_dates_with_payment_history, 
                 updated_emi_list_response['updated_month_index']
             )
-            
+
             payment = Payments.objects.create(
                 amount = request.data['amount'],
                 loan = loan,

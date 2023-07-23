@@ -7,16 +7,23 @@
 ## Creating the virtual environment
 
 Clone this project and create a Virtual Environment & activate the venv in the project location.
+
 ```sh
-$ virtualenv venv
+virtualenv venv
 ```
+If you're in windows:
 ```sh
-$ venv/bin/activate
+venv/Scripts/activate
+```  
+
+If you're in Linux:
+```sh
+source venv/bin/activate
 ```  
 
 ## Install all required dependencies from requirements.txt file
 ```sh
-$ pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Rename `.env-dev` file to `.env` and fill your database credentials.
@@ -77,31 +84,58 @@ Something link below will appear:
 
 To Install MySQL Database, I have followed this documentation:
 ```sh
-$ https://www.dataquest.io/blog/install-mysql-windows/
+https://www.dataquest.io/blog/install-mysql-windows/
 ```
 
-Create Database in your MySQL shell by:
+Create Database in your MySQL shell / or in CMD by:
 ```sh
-mysql -u user-name -p
+mysql -u <mysql-user-name> -p
 ```
 
 Run a CREATE DATABASE command to create a new database. 
 ```sh
-CREATE DATABASE assignment. 
+CREATE DATABASE <mysql-database-name>; 
+```
+***For example: CREATE DATABASE assignment;***
+
+## Initial Project setup
+Open file backend_assignment/settings.py and change the MySQL Database settings such as: 
+```sh
+# MySQL Database Setup
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USERNAME'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST':'localhost',
+        'PORT':'3306',
+    }
+}
+```
+Now, change the values in `.env` to your own values, such as:
+
+```sh
+DATABASE_NAME = assignment
+DATABASE_USERNAME = sample_username
+DATABASE_PASSWORD = sample_password
 ```
 
 
 ## Creating and Setting up Models  
 
 ```sh
-$ python3 manage.py makemigrations
+cd backend_assignment/
 ```
 ```sh
-$ python3 manage.py migrate 
+python3 manage.py makemigrations loan payments user
 ```
-Run the Django Server
 ```sh
-$ python3 manage.py runserver
+python3 manage.py migrate 
+```
+Run the Django Server:
+```sh
+python3 manage.py runserver
 ```
   
 ## Start Celery worker  
@@ -110,20 +144,6 @@ Inside your project dir and in the venv, type:
 $ celery -A backend_assignment.celery worker --pool=solo -l INFO
 ```
 
-## Initial Project setup
-Open file backend_assignment/settings.py and change the MySQL Database settings such as: 
-```sh
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'assignment',
-        'USER': 'your_user_name',
-        'PASSWORD': 'your_db_password',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
-}
-```
 
 #### ***File path for transactions_data.csv is backend_assignment/static/***
 
