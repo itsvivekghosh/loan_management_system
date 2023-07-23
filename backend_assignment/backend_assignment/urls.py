@@ -33,12 +33,12 @@ urlpatterns = [
     path('api/register-user/', RegisterUser.as_view(), name="Register User API"),
 
     # Loan APIs
-    path('api/apply-loan/', ApplyLoan.as_view(), name="Loan APIs"),
+    path('api/apply-loan/', ApplyLoan.as_view(), name="Apply Loan API"),
 
     ## Payment APIs
-    path('api/make-payment/', PaymentsView.as_view(), name="Make Payment"),
+    path('api/make-payment/', PaymentsView.as_view(), name="Make Payment API"),
     
     # Get Transaction by Loan ID API
-    path('api/get-statement/', FetchTransactionView.as_view(), name="Get Statemnet")
+    path('api/get-statement/', FetchTransactionView.as_view(), name="Get Statement API")
     
 ]
