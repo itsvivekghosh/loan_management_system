@@ -113,12 +113,13 @@ $ celery -A backend_assignment.celery worker --pool=solo -l INFO
 ## Initial Project setup
 Open file backend_assignment/settings.py and change the MySQL Database settings such as: 
 ```sh
+# MySQL Database Setup
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'assignment',
-        'USER': 'your_user_name',
-        'PASSWORD': 'your_db_password',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USERNAME'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST':'localhost',
         'PORT':'3306',
     }
