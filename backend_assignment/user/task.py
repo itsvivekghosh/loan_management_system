@@ -3,6 +3,9 @@ from celery import shared_task
 import time, csv
 from .models import User
 
+import backend_assignment.constants as constant
+
+
 
 # celery -A backend_assignment.celery worker --pool=solo -l INFO
 
@@ -13,7 +16,7 @@ def calculateCreditScore(aadhar_number):
 
         reader = csv.reader(csv_file)
         total_balance = 0
-        credit_score = 300
+        credit_score = constant.MIN_CREDIT_VALUE
         credit_cross_balance = 0
         debit_cross_balance = 0
 
@@ -28,28 +31,28 @@ def calculateCreditScore(aadhar_number):
 
                 if amount != 0 :
 
-                    if transaction_type == 'DEBIT':
+                    if transaction_type == constant.DEBIT:
                         total_balance -= amount
                         debit_cross_balance += amount
             
-                    elif transaction_type == "CREDIT":
+                    elif transaction_type == constant.CREDIT:
                         total_balance += amount
                         credit_cross_balance += amount
                 else:
                     total_balance += 0
 
-                if credit_cross_balance > 15000:
-                    credit_score += (credit_cross_balance // 15000) * 10
+                if credit_cross_balance > constant.CROSS_BALANCE_CHECK:
+                    credit_score += (credit_cross_balance // constant.CROSS_BALANCE_CHECK) * constant.CREDIT_SCORE_POINTS_VARIABLE
                     credit_cross_balance = 0
 
-                if debit_cross_balance > 15000:
-                    credit_score -= (debit_cross_balance // 15000) * 10
+                if debit_cross_balance > constant.CROSS_BALANCE_CHECK:
+                    credit_score -= (debit_cross_balance // constant.CROSS_BALANCE_CHECK) * constant.CREDIT_SCORE_POINTS_VARIABLE
                     debit_cross_balance = 0
             
-        if (total_balance >= 1000000 or credit_score > 900):
-            credit_score = 900
-        elif (total_balance <= 100000 or credit_score < 300):
-            credit_score = 300
+        if (total_balance >= constant.MAX_BANK_BALANCE_CHECK or credit_score > constant.MAX_CREDIT_SCORE):
+            credit_score = constant.MAX_CREDIT_SCORE
+        elif (total_balance <= constant.MIN_BANK_BALANCE_CHECK or credit_score < constant.MIN_CREDIT_VALUE):
+            credit_score = constant.MIN_CREDIT_VALUE
     
     # time.sleep(10)
     User.objects.filter(
