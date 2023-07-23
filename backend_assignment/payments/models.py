@@ -5,7 +5,9 @@ from datetime import datetime
 
 
 class Payments(models.Model):
-
+    '''
+    Payment Model
+    '''
     payment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     amount = models.PositiveBigIntegerField(null=False, blank=False)
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE)

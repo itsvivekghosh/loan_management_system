@@ -2,7 +2,9 @@ from django.db import models
 import uuid
 
 class User(models.Model):
-
+    '''
+        User Model
+    '''
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     aadhar_number = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100)

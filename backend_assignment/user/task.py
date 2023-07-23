@@ -66,6 +66,7 @@ def calculateCreditScore(aadhar_number):
             elif (total_balance <= constant.MIN_BANK_BALANCE_CHECK or credit_score < constant.MIN_CREDIT_VALUE):
                 credit_score = constant.MIN_CREDIT_VALUE
         
+        ## Saving the calculated Credit Score to User table
         User.objects.filter(
             aadhar_number = aadhar_number
         ).update(
@@ -75,6 +76,7 @@ def calculateCreditScore(aadhar_number):
         message = 'Total Balance for {} : {} & Credit Score is: {}'.format(aadhar_number, total_balance, credit_score)
         return get_success_response(message).data
     
+    ## Returning if any exception got caught
     except Exception as e:
         message = 'Error while calculating the credit score, Error Cause: {}'.format(str(e))
         return get_error_response(message).data

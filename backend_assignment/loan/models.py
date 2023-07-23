@@ -6,7 +6,9 @@ import uuid
 
 
 class Loan(models.Model):
-
+    '''
+        Loan Model
+    '''
     loan_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     loan_type = models.CharField(choices=constant.LOAN_CHOICES, default="Personal", max_length=9)
