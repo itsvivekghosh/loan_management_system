@@ -13,6 +13,9 @@ from backend_assignment.utils import get_error_response, get_success_response, g
 class RegisterUser(APIView):
     
     def get(self, request):
+        '''
+            Getting the list of all the Registered Users
+        '''
 
         try:
             users = User.objects.all().values()
@@ -25,13 +28,18 @@ class RegisterUser(APIView):
     
 
     def post(self, request):
+        '''
+            Registering the user
+        '''
 
         register_user_response = self.register_user(user_data=request.data)
         return register_user_response
         
 
     def register_user(self, user_data):
-
+        '''
+            Creating the user as per the aadhar number
+        '''
         try:
 
             serializer = UserSerializer(data=user_data)

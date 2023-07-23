@@ -9,6 +9,9 @@ import backend_assignment.constants as constant
 
 
 class LOANTYPE(Enum):
+    '''
+    Loan Type ENUM
+    '''
     CAR = constant.CAR
     PERSONAL = constant.PERSONAL
     EDUCATION = constant.EDUCATION
@@ -16,6 +19,9 @@ class LOANTYPE(Enum):
 
 
 def validate_loan_requirements(user: User, data):
+    '''
+        Validation of all loan requirements and checking if the loan of the amount can be sanctioned or not.
+    '''
 
     if user.credit_score < constant.MIN_CREDIT_SCORE:
         return get_response_data(False, "Your credit score is less then 450")
@@ -50,6 +56,9 @@ def validate_loan_requirements(user: User, data):
 
 
 def validate_emi_requirements(data, user):
+    '''
+    Validate all the calculated Loan EMI requirements
+    '''
     
     emi_amount = calculate_emi(data)
 
@@ -113,7 +122,10 @@ def calculate_emi(data):
 
 
 def calculate_due_dates_with_amount(amount, loan_date, term_period, loan_amount, interest_rate):
-
+    '''
+    Calculate the Due dates and emi amount with the due dates and principal & interest amounts.
+    Save in DB.
+    '''
     listData = []
     loan_amount_ = loan_amount
     for index in range(term_period):
@@ -144,7 +156,9 @@ def calculate_due_dates_with_amount(amount, loan_date, term_period, loan_amount,
 
 
 def nextDate(today_date):
-
+    '''
+    Calculates the next day of current date
+    '''
     year = today_date.year
     month = today_date.month
     
@@ -154,7 +168,9 @@ def nextDate(today_date):
 
 
 def nextDateUtil(current_date:datetime):
-
+    '''
+    Calculates the next day of current date and also calculates the first day of due date of next month
+    '''
     current_date = current_date.replace(day=1)
     current_date = current_date + timedelta(days=32)
     next_date = current_date.replace(day=1)
@@ -164,7 +180,9 @@ def nextDateUtil(current_date:datetime):
 
 
 def get_loan_payment_due_dates_list(payment_list):
-
+    '''
+    Returns the loan payment due date list from payment list
+    '''
     response = []
     for data in payment_list:
         res = {

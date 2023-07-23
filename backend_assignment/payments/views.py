@@ -15,8 +15,13 @@ from backend_assignment.utils import *
 import backend_assignment.constants as constant
 
 class PaymentsView(APIView):
-
+    '''
+    Payments View
+    '''
     def get(self, request):
+        '''
+            Getting all the Payments as a list
+        '''
 
         try:
             
@@ -30,7 +35,9 @@ class PaymentsView(APIView):
     
 
     def post(self, request):
-
+        '''
+        Creating a payment by checking the requirements
+        '''
         try:
 
             serializer = PaymentSerializer(data=request.data)
@@ -43,15 +50,18 @@ class PaymentsView(APIView):
                     request=request, loan=loan
                 )
 
+                ## Checking if the requiremenmts are correct
                 if is_loan_payment_requirements_correct.data['status'] == constant.SUCCESS:
-                
+                    
+                    ## updating the emi list for the month
                     updated_emi_list_response = update_emi_list_for_payment_util_(
                         request_data=request.data, 
                         loan=loan
                     )
 
                     if updated_emi_list_response.data['status'] == constant.SUCCESS:
-
+                        
+                        ## Creasting a payment request
                         return self.create_payment_response_(
                             request=request, 
                             loan=loan, 
@@ -65,14 +75,17 @@ class PaymentsView(APIView):
                     return is_loan_payment_requirements_correct
               
             return get_fields_error_message(serializer=serializer)
-            
+        
+        ## Catching the exception and return error response
         except Exception as e:
             message = 'Error while making the payment, Error Cause: {}'.format(str(e))
             return get_error_response(message) 
         
         
     def check_loan_emi_payment_requirements_are_matching_(self, request, loan):
-
+        '''
+        Checking the payment of loan month requirements
+        '''
         try:
             # Checking if the user has already paid for the current date or not
             # if yes, then rejecting the payment
@@ -96,7 +109,9 @@ class PaymentsView(APIView):
         
 
     def create_payment_response_(self, request, loan, updated_emi_list_response) -> Response:
-
+        '''
+            Creating the payment response 
+        '''
         try:
 
             principal_amount, interest_amount_paid = get_principal_amount_and_interest_amount(
@@ -104,6 +119,7 @@ class PaymentsView(APIView):
                 updated_emi_list_response['updated_month_index']
             )
 
+            ## Saving the Payment object
             payment = Payments.objects.create(
                 amount = request.data['amount'],
                 loan = loan,
@@ -137,7 +153,9 @@ class PaymentsView(APIView):
 class FetchTransactionView(APIView):
 
     def get(self, request):
-        
+        '''
+        Getting all the transactions / statement list
+        '''
         try:
 
             loan_id = request.headers['loan-id']
@@ -150,7 +168,9 @@ class FetchTransactionView(APIView):
         
 
     def get_transactions_statement(self, loan_id):
-
+        '''
+            Getting transactions list with past transaction and upcoming transactions
+        '''
         try:
 
             transaction_list = Payments.objects.all().filter(loan_id=loan_id).values()
@@ -170,7 +190,9 @@ class FetchTransactionView(APIView):
         
 
     def get_past_transactions_response(self, transaction_list):
-
+        '''
+        Getting all Past transactions
+        '''
         try:
 
             past_transactions = []
@@ -194,7 +216,9 @@ class FetchTransactionView(APIView):
     
 
     def get_upcoming_transactions(self, loan: Loan):
-        
+        '''
+        Getting all upcoming transactions
+        '''
         upcoming_payments = []
 
         try:
@@ -216,7 +240,9 @@ class FetchTransactionView(APIView):
         
 
     def create_transactions_statement_response(self, past_transactions_response: Response, upcoming_transactions: Response):
-        
+        '''
+        Create the transaction statement response
+        '''
         response = {}
 
         try:

@@ -12,9 +12,13 @@ from backend_assignment.utils import *
 
 
 class ApplyLoan(APIView):
-
+    '''
+    Apply Loan Class Based View
+    '''
     def get(self, request):
-
+        '''
+        Getting the list of all applied loans
+        '''
         try:
 
             loans = Loan.objects.all().values()
@@ -28,7 +32,9 @@ class ApplyLoan(APIView):
 
     
     def post(self, request):
-
+        '''
+        Create a Loan
+        '''
         try:
 
             serializer = LoanSerializer(data=request.data)
@@ -37,11 +43,13 @@ class ApplyLoan(APIView):
                 
                 user = User.objects.get(user_id = request.data["user_id"])
 
+                ## Checking if the Loan requirements are matched
                 loan_check = validate_loan_requirements(user, request.data)
                 loan_check_status, loan_check_message = loan_check["status"], loan_check["message"]
 
                 if loan_check_status == True:
-
+                    
+                    # Creating the loan object and saving in DB
                     return self.create_loan_util(
                         request=request, 
                         user=user, 
@@ -60,7 +68,9 @@ class ApplyLoan(APIView):
         
 
     def create_loan_util(self, request, user, loan_check_message):
-
+        '''
+        Create the loan data object
+        '''
         try:
 
             payment_due_dates_list = calculate_due_dates_with_amount(
@@ -89,7 +99,9 @@ class ApplyLoan(APIView):
 
 
     def create_loan_object(self, request, user, total_loan_amount_with_interest, loan_check_message, payment_due_dates_list, payment_due_dates_list_response):
-        
+        '''
+        Create the loan Object and saving in DB
+        '''
         try:
             
             created_loan_object = Loan.objects.create(

@@ -7,7 +7,10 @@ import math
 
 
 def check_if_previous_emis_are_due(data, loan: Loan) -> Response:
-    
+    '''
+    Check if there are any pending EMIs or previous month EMIs are due or not
+    if yes, then return false
+    '''
     try:
 
         loan_emis_list = loan.emi_due_dates_with_payment_history
@@ -29,15 +32,20 @@ def check_if_previous_emis_are_due(data, loan: Loan) -> Response:
 
 
 def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
-
+    '''
+    Return the updated EMI list with their due dates
+    '''
     try:
 
         is_any_payment_done = False
         updated_month_index = -1
         current_date = datetime.now().date()
         emi_amount, emi_new_amount = -1, 0
+        amount_equal_to_emi_amount =  False
         loan_paid_month, new_emi_object = None, None
 
+        ## Calculating the new EMI per month value,
+        ## if the payment amount is not equal to current EMI value of month.
         if float(loan.emi_amount) != float(request_data['amount']):
             data = {
                 'loan_amount': loan.loan_amount - request_data['amount'],
@@ -48,15 +56,19 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
 
             ## Calculating the new EMI Amount
             emi_new_amount = math.ceil(loan.emi_amount + (loan.emi_amount - request_data['amount'])/data["term_period"])
+            amount_equal_to_emi_amount = True
 
         else:
             emi_amount = loan.emi_amount
 
-
+        ## Iterating every emi list object
         for data in loan.emi_due_dates_with_payment_history:
             
+            ## Current due date of the EMI object
             due_date_time = datetime.strptime(data['due_date'], "%Y-%m-%d").date()
 
+            ## check if the current EMI due is already paid or not
+            ## If yes return false, that can't pay again.
             if current_date <= due_date_time and is_any_payment_done == False:
 
                 if data['emi_paid'] == False:
@@ -71,9 +83,10 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
 
                 # break
 
-            elif request_data['amount'] != loan.emi_amount and current_date <= due_date_time:
+            ## Changing the EMI list values if the payment amount is not equal to EMI amount.
+            elif request_data['amount'] != loan.emi_amount and current_date <= due_date_time and amount_equal_to_emi_amount == True:
 
-                # Updating the EMID Due dates Loan Objects
+                # Updating the EMI Due dates Loan Objects
                 data['due_amount'] = emi_amount
 
                 interest_on_emi = new_emi_object['loan_amount']*(loan.interest_rate/100) / 12
@@ -87,8 +100,12 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
                 data["interest_on_emi"] = math.ceil(interest_on_emi)
                 data['principal_amount'] = math.ceil(principal_amount)
                 data['outstanding_balance'] = math.ceil(new_emi_object['loan_amount'])
-                
 
+            elif request_data['amount'] != loan.emi_amount and current_date <= due_date_time:
+                # Updating the EMI Due dates Loan Objects
+                data['due_amount'] = emi_amount
+                
+        ## Saving the loan if there are any changes to EMI list
         if is_any_payment_done:
             loan.save()
 
@@ -106,7 +123,10 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
 
 
 def get_principal_amount_and_interest_amount(data_list, month_index):
-
+    '''
+    Get the principal amount and interest Amount as Tuple 
+    This is checked as per the month index calculated
+    '''
     try:
         for data in data_list:
             if data['emi_month_number'] == month_index:
