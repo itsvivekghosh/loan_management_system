@@ -15,21 +15,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+
+from user.views import RegisterUser
+from loan.views import ApplyLoan
+from payments.views import FetchTransactionView, PaymentsView
+
 
 
 
 urlpatterns = [
     
+    # Admin URL
     path('admin/', admin.site.urls),
     
     # User URLS
-    path('api/', include('user.urls'), name="User APIs"),
+    path('api/register-user/', RegisterUser.as_view(), name="Register User API"),
 
     # Loan APIs
-    path('api/', include('loan.urls'), name="Loan APIs"),
+    path('api/apply-loan/', ApplyLoan.as_view(), name="Apply Loan API"),
 
-    # Payment APIs
-    path('api/', include('payments.urls'), name="Payment APIs"),
+    ## Payment APIs
+    path('api/make-payment/', PaymentsView.as_view(), name="Make Payment API"),
+    
+    # Get Transaction by Loan ID API
+    path('api/get-statement/', FetchTransactionView.as_view(), name="Get Statement API")
     
 ]

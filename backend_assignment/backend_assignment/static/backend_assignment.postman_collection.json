@@ -193,7 +193,7 @@
 				"header": [
 					{
 						"key": "loan-id",
-						"value": "bda6214b-488d-45e5-9fbd-13cf92c5ba8b",
+						"value": "eb1354ad-e450-4b28-a563-a9cf66bd5406",
 						"description": "Loan ID",
 						"type": "text"
 					}
@@ -367,7 +367,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"user_id\": \"efb07800-fc57-4462-906b-a9663b4c4309\",\r\n    \"loan_type\": \"Personal\",\r\n    \"loan_amount\": 1000000,\r\n    \"interest_rate\": 15,\r\n    \"term_period\": 12,\r\n    \"disbursement_date\": \"2023-07-26\"\r\n}",
+					"raw": "{\r\n    \"user_id\": \"613a6abd-5d37-4565-a3b4-0720565d263c\",\r\n    \"loan_type\": \"Personal\",\r\n    \"loan_amount\": 1000000,\r\n    \"interest_rate\": 15,\r\n    \"term_period\": 6,\r\n    \"disbursement_date\": \"2023-07-26\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -547,7 +547,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"loan_id\": \"bda6214b-488d-45e5-9fbd-13cf92c5ba8b\",\r\n    \"amount\": 94560\r\n}",
+					"raw": "{\r\n    \"loan_id\": \"eb1354ad-e450-4b28-a563-a9cf66bd5406\",\r\n    \"amount\": 1044204\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
