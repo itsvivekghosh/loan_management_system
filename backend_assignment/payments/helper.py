@@ -41,6 +41,7 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
         updated_month_index = -1
         current_date = datetime.now().date()
         emi_amount, emi_new_amount = -1, 0
+        amount_equal_to_emi_amount =  False
         loan_paid_month, new_emi_object = None, None
 
         ## Calculating the new EMI per month value,
@@ -55,6 +56,7 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
 
             ## Calculating the new EMI Amount
             emi_new_amount = math.ceil(loan.emi_amount + (loan.emi_amount - request_data['amount'])/data["term_period"])
+            amount_equal_to_emi_amount = True
 
         else:
             emi_amount = loan.emi_amount
@@ -82,9 +84,9 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
                 # break
 
             ## Changing the EMI list values if the payment amount is not equal to EMI amount.
-            elif request_data['amount'] != loan.emi_amount and current_date <= due_date_time:
+            elif request_data['amount'] != loan.emi_amount and current_date <= due_date_time and amount_equal_to_emi_amount == True:
 
-                # Updating the EMID Due dates Loan Objects
+                # Updating the EMI Due dates Loan Objects
                 data['due_amount'] = emi_amount
 
                 interest_on_emi = new_emi_object['loan_amount']*(loan.interest_rate/100) / 12
@@ -98,6 +100,10 @@ def update_emi_list_for_payment_util_(request_data, loan: Loan) -> Response:
                 data["interest_on_emi"] = math.ceil(interest_on_emi)
                 data['principal_amount'] = math.ceil(principal_amount)
                 data['outstanding_balance'] = math.ceil(new_emi_object['loan_amount'])
+
+            elif request_data['amount'] != loan.emi_amount and current_date <= due_date_time:
+                # Updating the EMI Due dates Loan Objects
+                data['due_amount'] = emi_amount
                 
         ## Saving the loan if there are any changes to EMI list
         if is_any_payment_done:
