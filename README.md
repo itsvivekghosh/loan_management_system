@@ -124,7 +124,9 @@ DATABASES = {
     }
 }
 ```
-  
+
+#### ***File path for transactions_data.csv is backend_assignment/static/***
+
 ## API ENDPOINTS  
 
 http://localhost:8000/ 
